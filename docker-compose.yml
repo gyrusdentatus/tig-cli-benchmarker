@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  tig-benchmarker:
+    build: .
+    ports:
+      - "80:80"
+    secrets:
+      - api_key
+      - address
+    environment:
+      - API_URL=https://api.tig.foundation/play
+
+secrets:
+  api_key:
+    file: ./api_key.txt
+  address:
+    file: ./address.txt
