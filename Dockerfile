@@ -2,7 +2,6 @@ FROM rust:latest
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
-    python3 \
     curl \
     nodejs \
     && curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
@@ -23,13 +22,10 @@ RUN cargo install wasm-opt --locked
 ENV PATH="/root/.cargo/bin:/root/.cache/.wasm-pack/.wasm-bindgen-cargo-install-0.2.92/bin:${PATH}"
 
 # Build the wasm package
-RUN wasm-pack build --release --target web
+RUN wasm-pack build --release --target nodejs
 
 # Copy the benchmark script
-COPY benchmark.js .
+COPY benchmark.mjs .
 
-# Expose port 80
-EXPOSE 80
-
-# Start the web server and run the benchmark script
-CMD ["sh", "-c", "python3 -m http.server 80 & node benchmark.js"]
+# Run the benchmark script
+CMD ["node", "benchmark.mjs"]
