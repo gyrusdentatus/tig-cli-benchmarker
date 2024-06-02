@@ -16,6 +16,15 @@ RUN git clone https://github.com/tig-foundation/tig-monorepo
 # Set the working directory to the benchmarker
 WORKDIR /app/tig-monorepo/tig-benchmarker
 
+# Copy wasm-opt binary
+COPY wasm-opt /usr/local/bin/
+
+# Ensure wasm-opt is executable
+RUN chmod +x /usr/local/bin/wasm-opt
+
+# Update PATH to include the directory where wasm-bindgen is installed
+ENV PATH="/root/.cache/.wasm-pack/.wasm-bindgen-cargo-install-0.2.92/bin:${PATH}"
+
 # Build the wasm package
 RUN wasm-pack build --release --target web
 
