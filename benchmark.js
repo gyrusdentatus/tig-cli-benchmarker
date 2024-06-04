@@ -43,7 +43,7 @@ async function retry(fn, retries = 5, delayMs = 1000) {
 async function checkApiReady(apiUrl, apiKey) {
   try {
     const fetch = await import('node-fetch');
-    const url = `${apiUrl}/get-challenges`;
+    const url = `${apiUrl}/get-challenges?block_id=f8becb0d836b3a1844d533afef349307`;  // Add a valid block_id here
     const headers = {
       'x-api-key': apiKey,
       'user-agent': 'TIG API',
